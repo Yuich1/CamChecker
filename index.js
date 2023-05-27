@@ -1,9 +1,10 @@
 //const API_URL = "http://localhost:8080/picture";
 const API_URL = "https://camcheckerserver.onrender.com/picture";
 const img = document.createElement('img');
+let pulseBubble;
 
 document.addEventListener('DOMContentLoaded', async function () {
-    document.body.appendChild(img);
+    document.getElementById("guider2Area").appendChild(img);
     img.onload = function () {
         console.log("pic loaded")
         const datetime = getExifTime(img);
@@ -14,6 +15,10 @@ document.addEventListener('DOMContentLoaded', async function () {
 });
 
 const callAPI = async () => {
+    //$(".pulse-container").css("opacity", "1");
+    if (pulseBubble) {
+        document.getElementById("guider2Area").appendChild(pulseBubble);
+    }
     const param = {
         method: "GET",
         'Content-Type': 'image/jpeg',
@@ -23,6 +28,11 @@ const callAPI = async () => {
         .then(blob => {
             const objectURL = URL.createObjectURL(blob);
             img.src = objectURL;
+        })
+        .then(() => {
+            //$(".pulse-container").css("opacity", "0");
+            const guider2Area = document.getElementById("guider2Area");
+            pulseBubble = guider2Area.removeChild(guider2Area.firstElementChild);
         });
 }
 
