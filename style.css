@@ -1,21 +1,25 @@
 @charset "utf-8";
 
 html {
-  font-size: 62.5%; /*10px相当にして、子の%指定(rem)でフォントサイズを計算しやすく*/
+  font-size: 62.5%;
+  /*10px相当にして、子の%指定(rem)でフォントサイズを計算しやすく*/
 }
+
 body {
   color: #e2dede;
   background-color: #1d2630;
   font-size: 1.4rem;
   font-family: "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
 }
-.header{
+
+.header {
   color: #1d2630;
   background-color: #ececec;
   padding: 2rem 1rem 1rem;
   margin-bottom: 1rem;
 }
-.title{
+
+.title {
   margin: 0;
 }
 
@@ -23,23 +27,35 @@ body {
   0% {
     transform: rotate(0);
   }
+
   25% {
     transform: rotate(90deg);
   }
+
   50% {
     transform: rotate(180deg);
   }
+
   75% {
     transform: rotate(270deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
 }
- .imgArea {
-  width:640px;
-  height: 480px;
- }
+
+.imgArea {
+  width: min(640px, 100vw);
+  height: min(480px, 75vw);
+  display: grid;
+  place-items: center;
+  align-content: center;
+}
+
+img {
+  width: min(640px, 100vw);
+}
 
 
 @keyframes pulse {
@@ -47,11 +63,13 @@ body {
     opacity: 1;
     transform: scale(1);
   }
+
   to {
     opacity: .25;
     transform: scale(.75);
   }
 }
+
 /* PULSE BUBBLES */
 
 .pulse-container {
@@ -59,7 +77,6 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 220px auto;
 }
 
 .pulse-bubble {
@@ -70,11 +87,13 @@ body {
 }
 
 .pulse-bubble-1 {
-    animation: pulse .4s ease 0s infinite alternate;
+  animation: pulse .4s ease 0s infinite alternate;
 }
+
 .pulse-bubble-2 {
-    animation: pulse .4s ease .2s infinite alternate;
+  animation: pulse .4s ease .2s infinite alternate;
 }
+
 .pulse-bubble-3 {
-    animation: pulse .4s ease .4s infinite alternate;
+  animation: pulse .4s ease .4s infinite alternate;
 }
