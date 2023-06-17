@@ -7,8 +7,6 @@ document.addEventListener('DOMContentLoaded', async function () {
     document.getElementById("guider2Area").appendChild(img);
     img.onload = function () {
         console.log("pic loaded")
-        const datetime = getExifTime(img);
-        document.getElementById('datetime').innerHTML = datetime;
     }
     callAPI();
 
@@ -34,13 +32,26 @@ const callAPI = async () => {
             const guider2Area = document.getElementById("guider2Area");
             pulseBubble = guider2Area.removeChild(guider2Area.firstElementChild);
         });
+    const paramTime = {
+        method: "GET"
+    }
+    fetch(API_URL + "/time", paramTime)
+        .then(response => response.body.getReader())
+        .then(reader => {
+            return reader.read().then(({ done, value }) => {
+                const decoded = new TextDecoder("utf-8").decode(value);
+                const date = new Date(decoded);
+                const month = date.getMonth() + 1;
+                const day = date.getDate();
+                const hour = date.getHours();
+                const minute = date.getMinutes();
+                const datetime = `${month}月${day}日 ${hour}時${minute}分`;
+                document.getElementById('datetime').innerHTML = `撮影日時：${datetime}`;
+            }
+            )
+        })
+        .catch(err => {
+            console.log(err);
+        }
+        );
 }
-
-// imgにHTMLのimg要素を指定，撮影日時を返す
-const getExifTime = (img) => {
-    EXIF.getData(img, function () {
-        const datetime = EXIF.getTag(this, "DateTimeOriginal");
-        console.log(datetime)
-        return datetime;
-    });
-};
